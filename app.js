@@ -1,17 +1,27 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
+const mongoose = require("mongoose");
 const teacherRoute = require("./Route/TeacherRoute");
 const childRoute = require("./Route/ChildRoute");
 const classRoute = require("./Route/ClassRoute");
 
 
 const server = express();
-const port=process.env.PORT||8080;
+const port = process.env.PORT || 8080;
 
-server.listen(port, () => {
-    console.log("Nursery Server");
-});
+mongoose
+    .connect("mongodb://mongodb://127.0.0.1:27017/pdDB")
+    .then(() => {
+        console.log("Connected to the database");
+        server.listen(port, () => {
+            console.log("Connected to Nursery Server On Port:"+port);
+        });
+    })
+    .catch((error) => {
+        console.log("Error connecting to the database", error);
+    });
+
 
 // morgan middleware
 server.use(morgan(":method :url"));
