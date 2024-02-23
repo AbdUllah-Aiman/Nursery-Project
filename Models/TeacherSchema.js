@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const ClassSchema = require("./ClassSchema");
 // 1. create object from mongoose schema
 const Schema = mongoose.Schema({
-
     FullName: {
         type: String,
         required: true

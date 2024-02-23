@@ -6,11 +6,11 @@ const router = express.Router();
 router.route("/class")
     .get(Controller.getallClasses)
     .post(Controller.addClass)
-    .put(Controller.updateClass)
 
 router.route("/class/:id")
     .get(Controller.getClassByID)
     .delete(Controller.deleteClassByID)
+    .put(Controller.updateClass)
 
 router.get("/class/child/:id", Controller.getClassChildInfo);
 

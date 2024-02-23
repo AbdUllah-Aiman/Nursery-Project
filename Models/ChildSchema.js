@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const autoInc = require("auto-increment-group");
+const { autoInc } = require('auto-increment-group');
 
 const addresSchema = mongoose.Schema(
     {
@@ -12,7 +12,7 @@ const addresSchema = mongoose.Schema(
 
 // 1. create object from mongoose schema
 const Schema = mongoose.Schema({
-    id: { type: Number },
+    id_Inc: { type: String },
     FullName: {
         type: String,
         required: true
@@ -21,13 +21,13 @@ const Schema = mongoose.Schema({
     Level: { type: String, enum: ["PreKG", "KG1", "KG2"] },
     Address: addresSchema
 });
-// 2. mappping the schema to a collection
-module.exports = mongoose.model("Children", Schema);
 
 Schema.plugin(autoInc, {
-    field: "id",
+    field: "id_Inc",
     digits: 4,
     startAt: 1,
     incrementBy: 1,
     unique: true
 });
+// 2. mappping the schema to a collection
+module.exports = mongoose.model("Children", Schema);

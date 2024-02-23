@@ -37,5 +37,6 @@ server.use((request, response, next) => {
 
 // Error middleware
 server.use((error, request, response, next) => {
-    response.status(500).json({ message: error + "" });
+    const statusCode = error.status || 500;
+    response.status(statusCode).json({ message: error + "" });
 });
