@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+require("dotenv").config();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const teacherRoute = require("./Route/TeacherRoute");
@@ -9,13 +10,15 @@ const classRoute = require("./Route/ClassRoute");
 
 const server = express();
 const port = process.env.PORT || 8080;
+const Database = process.env.DB_URL || "mongodb://127.0.0.1:27017/NurseryDB";
+
 
 mongoose
-    .connect("mongodb://127.0.0.1:27017/NurseryDB")
+    .connect(Database)
     .then(() => {
         console.log("Connected to the database");
         server.listen(port, () => {
-            console.log("Connected to Nursery Server On Port:"+port);
+            console.log("Connected to Nursery Server On Port:" + port);
         });
     })
     .catch((error) => {

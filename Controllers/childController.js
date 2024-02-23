@@ -15,7 +15,12 @@ module.exports.getChildByID = (req, res, next) => {
     Child.findOne({ id_Inc: id + "" })
         .then((child) => {
             //we have to check if the child exists
-            if (!child) throw new Error("Id does not exist"); //this will be caught by catch block
+            if (!child) {
+                //this will be caught by catch block
+                let error = new Error("Required Child Not Found");
+                error.statusCode = 404;
+                throw error;
+            }; 
             res.status(200).json(child);
         })
         .catch((error) => {
@@ -49,7 +54,10 @@ module.exports.updateChild = (req, res, next) => {
         .then((child) => {
             // Check if the child exists
             if (!child) {
-                throw new Error("Child not found");
+                //this will be caught by catch block
+                let error = new Error("Required Child Not Found");
+                error.statusCode = 404;
+                throw error;
             }
             // Child updated successfully
             res.status(200).json(child);
@@ -66,7 +74,10 @@ module.exports.deleteChildByID = (req, res, next) => {
         .then((child) => {
             // Check if the child exists
             if (!child) {
-                throw new Error("Child not found");
+                //this will be caught by catch block
+                let error = new Error("Required Child Not Found");
+                error.statusCode = 404;
+                throw error;
             }
             // Child deleted successfully
             res.status(200).json({ message: "Child deleted successfully" });

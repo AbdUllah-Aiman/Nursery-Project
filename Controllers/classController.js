@@ -15,8 +15,11 @@ module.exports.getClassByID = (req, res, next) => {
     Class.findOne({ id_Inc: id + "" })
         .then((_Class) => {
             //we have to check if the Class exists
-            if (!_Class) { //this will be caught by catch block
-                throw new Error("Id does not exist");
+            if (!_Class) {
+                //this will be caught by catch block
+                let error = new Error("Required Class Not Found");
+                error.statusCode = 404;
+                throw error;
             }
             res.status(200).json(_Class);
         })
@@ -46,27 +49,19 @@ module.exports.updateClass = (req, res, next) => {
     const id = req.params.id;
     const updatedData = req.body;
 
-    if (!req.body || Object.keys(req.body).length === 0) {
-        throw new Error("No Body Provided")
-    } else {
-        const requiredKeys = ['name', 'Supervisor', 'ChildrenInClass'];
-
-        const missingKeys = requiredKeys.filter(key => !(key in req.body));
-        if (missingKeys.length == requiredKeys.length) {
-
-            throw new Error("Invalid Keys Provided")
-        }
-    }
-
     // Update the class document by ID
     Class.findOneAndUpdate({ id_Inc: id + "" }, updatedData)
         .then((_class) => {
             // Check if the class exists
             if (!_class) {
-                throw new Error("Class not found");
+                //this will be caught by catch block
+                let error = new Error("Required Class Not Found");
+                error.statusCode = 404;
+                throw error;
             }
             // class updated successfully
             res.status(200).json({ Message: "Class Updated Successfully" });
+            console.log(Object.keys(req.body));
         })
         .catch((error) => {
             next(error); //this will be caught by the error middleware
@@ -80,7 +75,10 @@ module.exports.deleteClassByID = (req, res, next) => {
         .then((_class) => {
             // Check if the class exists
             if (!_class) {
-                throw new Error("Class not found");
+                //this will be caught by catch block
+                let error = new Error("Required Class Not Found");
+                error.statusCode = 404;
+                throw error;
             }
             // Class deleted successfully
             res.status(200).json({ message: "Class deleted successfully" });
@@ -97,12 +95,15 @@ module.exports.getClassChildInfo = (req, res, next) => {
         .then((targetClass) => {
             if (targetClass) {
                 const childrens = targetClass.ChildrenInClass;
-                Child.find({},{_id:0}).where('id_Inc').in(childrens)
+                Child.find({}, { _id: 0 }).where('id_Inc').in(childrens)
                     .then((MyClassChildren) => { res.status(200).json(MyClassChildren) })
                     .catch((error) => { next(error) });
             }
             else {
-                throw new Error("Class not found");
+                //this will be caught by catch block
+                let error = new Error("Required Class Not Found");
+                error.statusCode = 404;
+                throw error;
             }
         }).catch((error) => {
             next(error); //this will be caught by the error middleware
@@ -114,12 +115,16 @@ module.exports.getClassTeacherInfo = (req, res, next) => {
     Class.findOne({ id_Inc: id })
         .then(targetClass => {
             if (targetClass) {
-                Teacher.findOne({ _id: targetClass.Supervisor },{_id:0,Password:0})
+                Teacher.findOne({ _id: targetClass.Supervisor }, { _id: 0, Password: 0 })
                     .then((data) => { res.status(200).json(data) })
                     .catch((error) => { next(error) });
             }
-            else
-                throw new Error("ID Not Found");
+            else {
+                //this will be caught by catch block
+                let error = new Error("Required Class Not Found");
+                error.statusCode = 404;
+                throw error;
+            }
         })
         .catch(error => {
             next(error) //this will be caught by the error middleware

@@ -14,8 +14,11 @@ module.exports.getTeacherByID = (req, res, next) => {
     Teacher.findOne({ _id: id })
         .then((teacher) => {
             //we have to check if the Class exists
-            if (!teacher) { //this will be caught by catch block
-                throw new Error("Teacher does not exist");
+            if (!teacher) {
+                //this will be caught by catch block
+                let error = new Error("Required Teacher Not Found");
+                error.statusCode = 404;
+                throw error;
             }
             res.status(200).json(teacher);
         })
@@ -45,24 +48,16 @@ module.exports.updateTeacher = (req, res, next) => {
     const id = req.params.id;
     const updatedData = req.body;
 
-    if (!req.body || Object.keys(req.body).length === 0) {
-        throw new Error("No Body Provided")
-    } else {
-        const requiredKeys = ['FullName', 'Email', 'Password', 'image'];
-
-        const missingKeys = requiredKeys.filter(key => !(key in req.body));
-        if (missingKeys.length == requiredKeys.length) {
-
-            throw new Error("Invalid Keys Provided")
-        }
-    }
 
     // Update the class document by ID
     Teacher.findOneAndUpdate({ _id: id }, updatedData)
         .then((teacher) => {
             // Check if the class exists
             if (!teacher) {
-                throw new Error("Teacher not found");
+                //this will be caught by catch block
+                let error = new Error("Required Teacher Not Found");
+                error.statusCode = 404;
+                throw error;
             }
             // class updated successfully
             res.status(200).json({ Message: "Teacher Updated Successfully" });
@@ -79,7 +74,10 @@ module.exports.deleteTeacherByID = (req, res, next) => {
         .then((teacher) => {
             // Check if the class exists
             if (!teacher) {
-                throw new Error("Teacher not found");
+                //this will be caught by catch block
+                let error = new Error("Required Teacher Not Found");
+                error.statusCode = 404;
+                throw error;
             }
             // Class deleted successfully
             res.status(200).json({ message: "Teacher deleted successfully" });
