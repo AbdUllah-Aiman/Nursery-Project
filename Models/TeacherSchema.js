@@ -2,20 +2,18 @@ const mongoose = require("mongoose");
 const ClassSchema = require("./ClassSchema");
 // 1. create object from mongoose schema
 const Schema = mongoose.Schema({
-    _id: mongoose.Types.ObjectId,
+
+    FullName: {
+        type: String,
+        required: true
+    },
     Email: {
         type: String,
-        required: true
-        ,unique: true
+        required: true,
+        unique: true
     },
-    name: {
-        type: String,
-        required: true
-    },
-    class: {
-        type: Number,
-        ref: "classes"
-    }
+    Password:String,
+    image:String
 });
 // 2. mappping the schema to a collection
-module.exports = mongoose.model("teachers", Schema);
+module.exports = mongoose.model("Teachers", Schema);
