@@ -60,8 +60,7 @@ module.exports.updateClass = (req, res, next) => {
                 throw error;
             }
             // class updated successfully
-            res.status(200).json({ Message: "Class Updated Successfully" });
-            console.log(Object.keys(req.body));
+            res.status(201).json({ Message: "Class Updated Successfully" });
         })
         .catch((error) => {
             next(error); //this will be caught by the error middleware
@@ -115,7 +114,7 @@ module.exports.getClassTeacherInfo = (req, res, next) => {
     Class.findOne({ id_Inc: id })
         .then(targetClass => {
             if (targetClass) {
-                Teacher.findOne({ _id: targetClass.Supervisor }, { _id: 0, Password: 0 })
+                Teacher.findOne({ _id: targetClass.Supervisor }, { _id: 0 })
                     .then((data) => { res.status(200).json(data) })
                     .catch((error) => { next(error) });
             }

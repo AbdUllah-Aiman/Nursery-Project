@@ -60,7 +60,7 @@ module.exports.updateChild = (req, res, next) => {
                 throw error;
             }
             // Child updated successfully
-            res.status(200).json(child);
+            res.status(201).json(child);
         })
         .catch((error) => {
             next(error); //this will be caught by the error middleware

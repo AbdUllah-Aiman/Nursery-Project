@@ -48,7 +48,6 @@ module.exports.updateTeacher = (req, res, next) => {
     const id = req.params.id;
     const updatedData = req.body;
 
-
     // Update the class document by ID
     Teacher.findOneAndUpdate({ _id: id }, updatedData)
         .then((teacher) => {
@@ -60,7 +59,7 @@ module.exports.updateTeacher = (req, res, next) => {
                 throw error;
             }
             // class updated successfully
-            res.status(200).json({ Message: "Teacher Updated Successfully" });
+            res.status(201).json({ Message: "Teacher Updated Successfully" });
         })
         .catch((error) => {
             next(error); //this will be caught by the error middleware
