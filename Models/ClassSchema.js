@@ -7,7 +7,8 @@ const Schema = mongoose.Schema({
     name: { type: String, required: true },
     Supervisor: {
         type: mongoose.ObjectId,
-        ref: 'Teachers'
+        ref: 'Teachers',
+        required: true
     },
     ChildrenInClass: [{ type: String, ref: "Children" }]
 });

@@ -18,7 +18,7 @@ const Schema = mongoose.Schema({
         required: true
     },
     Age: Number,
-    Level: { type: String, enum: ["PreKG", "KG1", "KG2"] },
+    Level: { type: String, enum: ["PreKG", "KG1", "KG2"], required: true },
     Address: addresSchema
 });
 
