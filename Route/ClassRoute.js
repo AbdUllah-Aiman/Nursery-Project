@@ -17,6 +17,6 @@ router.route("/class/:id")
 
 router.get("/class/child/:id", isTeacherOrAdmin, Controller.getClassChildInfo);
 
-router.get("/class/teacher/:id", isAdmin, Controller.getClassTeacherInfo);
+router.get("/class/teacher/:id", isTeacherOrAdmin, Controller.getClassTeacherInfo);
 
 module.exports = router;

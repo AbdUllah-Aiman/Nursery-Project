@@ -8,6 +8,7 @@ const authenticateMW = require("./Middlewares/AuthenticateMiddleware");
 const teacherRoute = require("./Route/TeacherRoute");
 const childRoute = require("./Route/ChildRoute");
 const classRoute = require("./Route/ClassRoute");
+const changePasswordRoute = require("./Route/ChangePasswordRoute");
 
 
 const server = express();
@@ -40,6 +41,7 @@ server.use(authenticateMW);
 server.use(teacherRoute);
 server.use(childRoute);
 server.use(classRoute);
+server.use(changePasswordRoute);
 
 // Not Found middleware
 server.use((request, response, next) => {
