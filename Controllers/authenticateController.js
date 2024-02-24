@@ -30,7 +30,7 @@ module.exports.login = (req, res, next) => {
 }
 
 exports.encryptedLogin = (req, res, next) => {
-    const mail = req.body.Email;
+    const mail = req.body.Email.toLowerCase();
     const pass = req.body.Password;
 
     if (mail == "admin@admin.com" && pass == "Admin@Aa") {

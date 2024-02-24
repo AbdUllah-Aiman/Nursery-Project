@@ -12,7 +12,7 @@ exports.insertValidations = [
 ]
 
 exports.updateValidations = [
-    param("id").isMongoId().withMessage("Must Provide valid ObjectID"),
+    param("id").isMongoId().withMessage("ID Should be of type ObjectID"),
     body("FullName").optional()
         .isString().withMessage("Name Should Be String")
         .isAlpha("en-US", { ignore: ' ' })
@@ -24,5 +24,5 @@ exports.updateValidations = [
 ]
 
 exports.deleteValidations = [
-    param('id').isInt({ min: 1 }).withMessage("ID Should be A positive Integer"),
+    param('id').isMongoId().withMessage("ID Should be of type ObjectID"),
 ]

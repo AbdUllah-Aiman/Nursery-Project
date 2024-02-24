@@ -69,7 +69,7 @@ module.exports.updateTeacher = (req, res, next) => {
 module.exports.deleteTeacherByID = (req, res, next) => {
     // get data from request body
     const id = req.params.id;
-    Teacher.findOneAndDelete({ _id: id + "" })
+    Teacher.findOneAndDelete({ _id: id  })
         .then((teacher) => {
             // Check if the class exists
             if (!teacher) {

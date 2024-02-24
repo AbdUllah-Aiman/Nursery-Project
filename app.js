@@ -1,8 +1,12 @@
 const express = require("express");
 const morgan = require("morgan");
 require("dotenv").config();
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./Documentation/swagger-output.json'); 
 const cors = require("cors");
 const mongoose = require("mongoose");
+
 const authenticateRoute = require("./Route/AuthenticateRoute");
 const authenticateMW = require("./Middlewares/AuthenticateMiddleware");
 const teacherRoute = require("./Route/TeacherRoute");
@@ -34,6 +38,9 @@ server.use(cors());
 // morgan middleware
 server.use(morgan(":method :url"));
 server.use(express.json())
+
+// Add the Swagger UI middleware
+server.use("/Nursery", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //routes
 server.use(RegisterTeacherRoute);
