@@ -9,6 +9,7 @@ const teacherRoute = require("./Route/TeacherRoute");
 const childRoute = require("./Route/ChildRoute");
 const classRoute = require("./Route/ClassRoute");
 const changePasswordRoute = require("./Route/ChangePasswordRoute");
+const RegisterTeacherRoute = require("./Route/RegisterTeacherRoute");
 
 
 const server = express();
@@ -35,6 +36,7 @@ server.use(morgan(":method :url"));
 server.use(express.json())
 
 //routes
+server.use(RegisterTeacherRoute);
 server.use(authenticateRoute);
 server.use(authenticateMW);
 
