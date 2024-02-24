@@ -1,9 +1,9 @@
 const express = require("express");
 const morgan = require("morgan");
 require("dotenv").config();
-
+const path = require('path');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./Documentation/swagger-output.json'); 
+const swaggerDocument = require('./Documentation/swagger-output.json');
 const cors = require("cors");
 const mongoose = require("mongoose");
 
@@ -40,7 +40,17 @@ server.use(morgan(":method :url"));
 server.use(express.json())
 
 // Add the Swagger UI middleware
-server.use("/Nursery", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+var options = {
+    customCss: `
+        .opblock-summary {height:50px}
+        .swagger-ui .topbar { display: none; }
+        .curl-command { display: none !important; }
+        .response-headers-wrapper { display: none !important; }
+        .request-body__text { width: 100% !important; }
+    `,
+    customSiteTitle: "Nursery Project Documenation"
+};
+server.use("/Nursery", swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 
 //routes
 server.use(RegisterTeacherRoute);
