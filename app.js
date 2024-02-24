@@ -3,6 +3,8 @@ const morgan = require("morgan");
 require("dotenv").config();
 const cors = require("cors");
 const mongoose = require("mongoose");
+const authenticateRoute = require("./Route/AuthenticateRoute");
+const authenticateMW = require("./Middlewares/AuthenticateMiddleware");
 const teacherRoute = require("./Route/TeacherRoute");
 const childRoute = require("./Route/ChildRoute");
 const classRoute = require("./Route/ClassRoute");
@@ -12,7 +14,7 @@ const server = express();
 const port = process.env.PORT || 8080;
 const Database = process.env.DB_URL || "mongodb://127.0.0.1:27017/NurseryDB";
 
-
+// connect to DB and server
 mongoose
     .connect(Database)
     .then(() => {
@@ -26,9 +28,15 @@ mongoose
     });
 
 
+server.use(cors());
 // morgan middleware
 server.use(morgan(":method :url"));
 server.use(express.json())
+
+//routes
+server.use(authenticateRoute);
+server.use(authenticateMW);
+
 server.use(teacherRoute);
 server.use(childRoute);
 server.use(classRoute);
