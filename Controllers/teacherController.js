@@ -29,7 +29,7 @@ module.exports.getTeacherByID = (req, res, next) => {
 
 module.exports.addTeacher = (req, res, next) => {
     // get data from request body
-    const newTeacher = new Teacher(req.body);
+    const newTeacher = new Teacher({ ...req.body, image: req.file.path });
     newTeacher
         .save() //returns a promise
         .then((newTeacher) => {
@@ -48,6 +48,11 @@ module.exports.updateTeacher = (req, res, next) => {
     const id = req.params.id;
     const updatedData = req.body;
 
+    const newImage = req.file.path;
+
+    if (newImage) {
+        updatedData.image = newImage;
+    }
     // Update the class document by ID
     Teacher.findOneAndUpdate({ _id: id }, updatedData)
         .then((teacher) => {
@@ -69,7 +74,7 @@ module.exports.updateTeacher = (req, res, next) => {
 module.exports.deleteTeacherByID = (req, res, next) => {
     // get data from request body
     const id = req.params.id;
-    Teacher.findOneAndDelete({ _id: id  })
+    Teacher.findOneAndDelete({ _id: id })
         .then((teacher) => {
             // Check if the class exists
             if (!teacher) {

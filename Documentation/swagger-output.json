@@ -142,17 +142,28 @@
                 ],
                 "parameters": [
                     {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Teacher data",
-                        "type": "object",
-                        "required": true,
-                        "example": {
-                            "FullName": "Your Name",
-                            "Email": "mail@example.com",
-                            "Password": "Strong_Pass123",
-                            "image": "MyImg.jpg"
-                        }
+                        "name": "FullName",
+                        "in": "formData",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "Email",
+                        "in": "formData",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "Password",
+                        "in": "formData",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "image",
+                        "in": "formData",
+                        "type": "file",
+                        "required": false
                     }
                 ],
                 "responses": {
@@ -231,21 +242,32 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "required": true,
-                        "type": "string"
+                        "type": "string",
+                        "required": true
                     },
                     {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Teacher data",
-                        "type": "object",
-                        "required": true,
-                        "example": {
-                            "FullName": "Your Name",
-                            "Email": "mail@example.com",
-                            "Password": "Strong_Pass123",
-                            "image": "MyImg.jpg"
-                        }
+                        "name": "FullName",
+                        "in": "formData",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "Email",
+                        "in": "formData",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "Password",
+                        "in": "formData",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "image",
+                        "in": "formData",
+                        "type": "file",
+                        "required": false
                     }
                 ],
                 "responses": {
